@@ -26,7 +26,12 @@ Register Page
                 {{ form.password2.label(class="form-label") }}<br>
                 {{ form.password2(class="form-text form-control",placeholder="Confirm Password") }}<br>
 
-                {{ form.submit(class="btn btn-primary btn-lg form-control") }}
+                {{ form.submit(class="btn btn-primary btn-lg form-control fw-bold") }}<br><br><br>
+
+                <div class="text-center">
+                    <p class="form-text text-white fw-bold">Have an account ? <a href="{{ url_for('login_page') }}" class="link-light"><span class="badge bg-secondary fs-6">Login</span></a></p>
+                </div>
+
             </fieldset>
         </form>
     </div>
