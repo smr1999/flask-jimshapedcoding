@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash,get_flashed_messages
+from flask import render_template, redirect, url_for, flash
 from market import app, db
 from market.models import Item, User
 from market.forms import RegisterForm
@@ -21,9 +21,10 @@ def register_page():
     form = RegisterForm()
     if form.validate_on_submit():
         user = User(username=form.username.data,
-                    email=form.email.data, password_hash=form.password1.data)
+                    email=form.email.data, password=form.password1.data)
         db.session.add(user)
         db.session.commit()
+        flash("Account created successfully .",category="success")
         return redirect(url_for('home_page'))
     if form.errors != {}:
         for err in form.errors.values():
