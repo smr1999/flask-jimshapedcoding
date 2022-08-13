@@ -10,7 +10,10 @@ Register Page
     <div class="col-md-6 border border-white rounded p-5">
         <form method="post" action="">
             <fieldset>
-                <legend>Register Form</legend><br><br>
+                <legend><strong>Register Form</strong></legend><br><br>
+
+                {{ form.hidden_tag() }}
+
                 {{ form.username.label(class="form-label") }}<br>
                 {{ form.username(class="form-control",placeholder="User Name") }}<br>
 
