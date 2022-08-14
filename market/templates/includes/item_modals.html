@@ -1,0 +1,46 @@
+<style>
+    #info-content{
+        background-color: #212121;
+    }
+</style>
+<div class="modal fade" id="MoreInfo-{{ item.id }}" aria-labelledby="MoreInfoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content" id="info-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="MoreInfoLabel">{{ item.name }}</h5>
+          <button type="button" class="btn-close btn-close-white " data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          {{ item.description }}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="modal fade" id="PurchaseConfirm-{{ item.id }}" aria-labelledby="MoreInfoLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" id="info-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="MoreInfoLabel">Buy - {{ item.name }}</h5>
+        <button type="button" class="btn-close btn-close-white " data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="{{ url_for('purchase_item', item_id=item.id) }}" method="post">
+          <fieldset>
+            <legend class="text-center">Are you sure to buy <b>{{ item.name }}</b> for <b>{{ item.price }}$</b> ?</legend>
+            {{ purchase_form.hidden_tag() }}
+            <p class="text-center"><small>By clicking purchase, you will purchase this item .</small></p>
+            {{ purchase_form.submit(class="btn btn-success form-control") }}
+          </fieldset>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+  
