@@ -37,9 +37,29 @@ Market Page
             </tbody>
         </table>
     </div>
-    <div class="col-md-4 col-12 bg-info">
+    <div class="col-md-4 col-12">
         <h2 class="text-center">Owned items</h2>
         <p class="text-center">Click on sell items to put an item back on the market</p><br>
+        {% if current_user.items %}
+        <div class="row">
+            {% for item in current_user.items %}
+            {% include 'includes/owned_items_modals.html' %}
+            <div class="col-12 col-md-6">
+                <div class="card bg-dark">
+                    <div class="card-body text-center">
+                        <h3 class="card-title">{{ item.name }}</h3>
+                        <p class="card-text">This item costs {{ item.name }}$ .</p>
+                        <button type="button" class="btn btn-danger form-control" data-bs-toggle="modal" data-bs-target="#SellConfirm-{{ item.id }}">Sell item</button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="bg-dark h1 text-center p-5">
+            You have nothing to sell
+        </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

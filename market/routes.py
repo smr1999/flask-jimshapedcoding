@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from market import app, db
 from market.models import Item, User
-from market.forms import RegisterForm, LoginForm, PurchaseForm
+from market.forms import RegisterForm, LoginForm, PurchaseForm,SellForm
 
 
 @app.route('/')
@@ -16,7 +16,8 @@ def home_page():
 def market_page():
     items = Item.query.filter_by(owner_id=None).all()
     purchase_form = PurchaseForm()
-    return render_template('market.html', items=items, purchase_form=purchase_form)
+    sell_form = SellForm()
+    return render_template('market.html', items=items, purchase_form=purchase_form,sell_form=sell_form)
 
 
 @app.route('/register', methods=["GET", "POST"])
@@ -77,5 +78,14 @@ def purchase_item(item_id):
             flash(f"You buyed item {item.name} successfully !",category="success")
         else:
             flash("Your budget is lower than item price !",category="danger")
-        return redirect(url_for("market_page"))
-    return ''
+    return redirect(url_for("market_page"))
+
+@app.route("/sell/<item_id>",methods=["POST"])
+def sell_item(item_id):
+    item = Item.query.filter_by(id=item_id).first()
+    if item:
+        current_user.budget += item.price
+        current_user.items.remove(item)
+        db.session.commit()
+        flash(f"You selled item {item.name} successfully !",category="success")
+    return redirect(url_for("market_page"))
